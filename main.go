@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	http.HandleFunc("/firestore/", FirestoreHandler)
 	http.HandleFunc("/", HelloWorldHandler)
 
 	appengine.Main()
