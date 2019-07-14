@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"cloud.google.com/go/firestore"
+	"go.opencensus.io/trace"
 )
 
 type FirestoreStore struct {
@@ -25,6 +26,9 @@ type Sample struct {
 }
 
 func (s *FirestoreStore) Create(ctx context.Context, sample *Sample) (*Sample, error) {
+	ctx, span := trace.StartSpan(ctx, "/firestoreStore/Create")
+	defer span.End()
+
 	now := time.Now()
 	sample.CreatedAt = now
 	sample.UpdatedAt = now

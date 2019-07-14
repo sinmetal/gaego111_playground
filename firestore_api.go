@@ -3,20 +3,13 @@ package main
 import (
 	"net/http"
 
-	"github.com/sinmetal/gcpmetadata"
 	"google.golang.org/appengine/log"
 )
 
 func FirestoreHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	projectID, err := gcpmetadata.GetProjectID()
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-	}
-
-	fc, err := NewFirestoreClient(ctx, projectID)
+	fc, err := NewFirestoreClient(ctx, ProjectID)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
